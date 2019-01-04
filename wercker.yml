@@ -47,3 +47,22 @@ deploy-to-cluster:
         token: $KUBERNETES_TOKEN
         insecure-skip-tls-verify: true
         command: apply -f kubernetes.yml
+        
+#Deploy the Product catalog to Kubernetes
+deploy-to-cluster-product-catalog:
+    box:
+        id: alpine
+        cmd: /bin/sh
+    steps:
+
+    - script:
+        name: "Visualise Kubernetes config"
+        code: cat alpha-office-product-catalog.kubernetes.yml
+
+    - kubectl:
+        name: deploy to kubernetes
+        server: $KUBERNETES_MASTER
+        #username: $KUBERNETES_USERNAME
+        token: $KUBERNETES_TOKEN
+        insecure-skip-tls-verify: true
+        command: apply -f alpha-office-product-catalog.kubernetes.yml
